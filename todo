@@ -1,0 +1,22 @@
+/lib
+│── /core
+│   │── /constants     
+│   │── /services   
+│   │── /utils        
+│   │── /models      
+│   │── /helpers    
+│
+│── /features
+│   │── /auth          
+│   │   │── /data     
+│   │   │── /logic     
+│   │   │── /presentation 
+│   │── /feed         
+│   │── /chat        
+│   │── /profile     
+│   │── /reels        
+│   │── /notifications 
+│
+│── /widgets          
+│── /config           
+│── /main.dart        
