@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:show_trade/core/const_color.dart';
 import 'package:show_trade/core/const_media.dart';
-import 'package:show_trade/screens/login.dart';
 
 import '../main.dart';
 
@@ -35,7 +34,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                   Container(
                     height: 0.02 * sh,
-                    width: 0.05 * sw,
+                    width: 0.02 * sh,
                     child: CircularProgressIndicator(
                       backgroundColor: circularProgressBG,
                       color: circularProgressColor,

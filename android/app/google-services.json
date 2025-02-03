@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285591308576",
+    "project_id": "showtrade-42b19",
+    "storage_bucket": "showtrade-42b19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285591308576:android:0efed22cf1f3001370af45",
+        "android_client_info": {
+          "package_name": "com.example.show_trade"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlmPS7C8ZXCcoINa1QiCkd_sbqTWkLAUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SvgPicture.asset(
                   loginLogo,
                   height: sh * 0.1,
-                 // width: sw * 0.17,
+                  // width: sw * 0.17,
                 ),
                 SizedBox(height: sh * 0.105),
                 AutoSizeText(
@@ -47,10 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: sh * 0.087),
                 IconButton(
+                    padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
                     onPressed: () {},
                     icon: SvgPicture.asset(
                       'assets/login_and_signup/continue_with_google.svg',
-                      width: 0.882 * sw,
+                      // width: 0.882 * sw,
                       height: 0.065 * sh,
                     )),
                 SizedBox(height: sh * 0.039),
@@ -118,12 +120,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
                 SizedBox(height: 0.039 * sh),
                 IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      'assets/login_and_signup/signin_button.svg',
-                     // width: 0.882 * sw,
-                      height: 0.065 * sh,
-                    )),
+                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    'assets/login_and_signup/signin_button.svg',
+                    width: 0.882 * sw,
+                    height: 0.065 * sh,
+                  ),
+                ),
                 SizedBox(height: 0.081 * sh),
                 RichText(
                   text: TextSpan(children: <InlineSpan>[
