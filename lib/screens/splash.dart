@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:show_trade/core/const_color.dart';
-import 'package:show_trade/core/const_media.dart';
+import 'package:show_trade/backend/authenticationService.dart';
+import 'package:show_trade/core/constTypes/const_color.dart';
+import 'package:show_trade/core/constTypes/const_media.dart';
 
 import '../main.dart';
 
@@ -11,8 +12,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3), () {
-      context.go('/login');
+    Future.delayed(const Duration(seconds: 1), () {
+      Authenticationservice().getCurrentUser() == null ? context.go('/login') : context.go('/home');
+      
     });
 
     return Scaffold(

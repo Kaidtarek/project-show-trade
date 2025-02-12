@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:show_trade/core/constTypes/const_color.dart';
+import 'package:show_trade/core/lighMode/lightTextTheme.dart';
 
 class AppTheme {
   static ThemeData lightMode = ThemeData(
       brightness: Brightness.light,
-      textTheme: TextTheme(
-        bodyLarge: TextStyle(
-            inherit: true,
-            color: Colors.black,
-            fontSize: 16.0,
-            fontWeight: FontWeight.w600),
-        bodyMedium: TextStyle(
-            inherit: true,
-            color: Colors.black,
-            fontSize: 14.0,
-            fontWeight: FontWeight.w500),
-        // ...other text styles...
-      ),
+      textTheme: lightTextTheme,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blue[300], // Light background color
@@ -53,11 +43,11 @@ class AppTheme {
           fontSize: 20,
           fontWeight: FontWeight.w800,
         ),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.red),
       ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
-          overlayColor: WidgetStateProperty.all(Colors.amber.withAlpha(102)),
+          overlayColor: WidgetStateProperty.all(login_email_color),
 
           splashFactory:
               InkRipple.splashFactory, 

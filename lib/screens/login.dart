@@ -2,8 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:show_trade/core/const_color.dart';
-import 'package:show_trade/core/const_media.dart';
+import 'package:go_router/go_router.dart';
+import 'package:show_trade/backend/authenticationService.dart';
+import 'package:show_trade/core/constTypes/const_color.dart';
+import 'package:show_trade/core/constTypes/const_media.dart';
+import 'package:show_trade/widget/custom_widget.dart';
 
 import '../main.dart';
 
@@ -20,7 +23,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool showPassword = false;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Authenticationservice()
+    //     .setupAuthStateChanges(context: context, direction: '/home');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    TextTheme th = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -47,86 +59,86 @@ class _LoginScreenState extends State<LoginScreen> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: sh * 0.087),
-                IconButton(
-                    padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      'assets/login_and_signup/continue_with_google.svg',
-                      // width: 0.882 * sw,
-                      height: 0.065 * sh,
-                    )),
+                Google_SignIn_Widget(sw: sw, sh: sh, context: context),
                 SizedBox(height: sh * 0.039),
-                AutoSizeText(
-                  'OR LOGIN WITH EMAIL',
-                  style: TextStyle(
-                      fontSize: 14.58,
-                      fontWeight: FontWeight.w700,
-                      color: or_login_with_email_color),
-                  minFontSize: 10,
-                  stepGranularity: 10,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                Or_login_with_email_color(),
                 SizedBox(height: sh * 0.039),
                 Form(
                     key: _formKey,
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                              enabledBorder: enableInputBorder,
-                              focusedBorder: focusInputBorder,
-                              focusedErrorBorder: enableInputBorder,
-                              labelText: 'Email'),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            if (!EmailValidator.validate(value)) {
-                              return 'Please enter a valid email';
-                            }
-                            return null;
-                          },
+                        Container(
+                          height: 0.065 * sh,
+                          child: TextFormField(
+                            controller: _emailController,
+                            style: th.bodySmall,
+                            decoration: InputDecoration(
+                                fillColor: text_filled_color,
+                                filled: true,
+                                enabledBorder: enableInputBorder,
+                                focusedBorder: focusInputBorder,
+                                focusedErrorBorder: enableInputBorder,
+                                border: enableInputBorder,
+                                labelStyle: th.bodySmall,
+                                labelText: 'Email'),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              if (!EmailValidator.validate(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
                         SizedBox(height: 20),
-                        TextFormField(
-                          obscureText: showPassword,
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
-                                },
-                                icon: SvgPicture.asset(
-                                    'assets/login_and_signup/eye_closed.svg')),
-                            enabledBorder: enableInputBorder,
-                            focusedBorder: focusInputBorder,
-                            focusedErrorBorder: enableInputBorder,
-                            labelText: 'Password',
+                        Container(
+                          height: 0.065 * sh,
+                          child: TextFormField(
+                            obscureText: showPassword,
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                                fillColor: text_filled_color,
+                                filled: true,
+                                suffixIcon: IconButton(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 3, horizontal: 6),
+                                    onPressed: () {
+                                      setState(() {
+                                        showPassword = !showPassword;
+                                      });
+                                    },
+                                    icon: SvgPicture.asset(
+                                        'assets/login_and_signup/eye_closed.svg')),
+                                enabledBorder: enableInputBorder,
+                                focusedBorder: focusInputBorder,
+                                focusedErrorBorder: enableInputBorder,
+                                labelText: 'Password',
+                                labelStyle: th.bodySmall),
+                            style: th.bodySmall,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
                           ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
                         ),
                       ],
                     )),
                 SizedBox(height: 0.039 * sh),
                 IconButton(
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
-
                   onPressed: () {},
                   icon: SvgPicture.asset(
                     'assets/login_and_signup/signin_button.svg',
                     width: 0.882 * sw,
-                    height: 0.065 * sh,
+                    height: 0.06 * sh,
                   ),
                 ),
                 SizedBox(height: 0.081 * sh),
@@ -135,15 +147,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextSpan(
                         text: 'Don’t have an account? ',
                         style: TextStyle(
-                            color: or_login_with_email_color,
+                            color: login_email_color,
                             fontWeight: FontWeight.w400,
                             fontSize: 16.77)),
-                    TextSpan(
-                        text: 'SIGN UP',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.77)),
+                    WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: TextButton(
+                          onPressed: () {
+                            context.push("/signup");
+                          },
+                          child: Text("SIGN UP.",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.77)),
+                        )),
+                    // TextSpan(
+                    //     text: 'SIGN UP',
+                    //     style: TextStyle(
+                    //         color: primaryColor,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontSize: 16.77)),
                   ]),
                 )
               ],

@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:show_trade/core/theme.dart';
 import 'package:show_trade/firebase_options.dart';
+import 'package:show_trade/screens/home.dart';
 import 'package:show_trade/screens/login.dart';
+import 'package:show_trade/screens/signup.dart';
 import 'package:show_trade/screens/splash.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -26,27 +29,36 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'show trade',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightMode,
+      darkTheme: AppTheme.darkMode,
+      themeMode: ThemeMode.system,
     );
   }
 }
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
+  initialLocation: '/splash',
   routes: [
     GoRoute(
       name: 'splash',
-      path: '/',
+      path: '/splash',
       builder: (context, state) => SplashScreen(),
     ),
     GoRoute(
       name: 'login',
       path: '/login',
       builder: (context, state) => LoginScreen(),
+    ),
+    GoRoute(
+      name: 'signup',
+      path: '/signup',
+      builder: (context, state) => SignupScreen(),
+    ),
+    GoRoute(
+      name: 'home',
+      path: '/home',
+      builder: (context, state) => HomePage(),
     ),
   ],
 );
