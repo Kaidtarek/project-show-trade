@@ -5,7 +5,7 @@ import 'package:show_trade/backend/authenticationService.dart';
 import 'package:show_trade/core/constTypes/const_color.dart';
 import 'package:show_trade/core/constTypes/const_media.dart';
 
-import '../main.dart';
+import '../../main.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -18,6 +18,7 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: Stack(
           fit: StackFit.expand,

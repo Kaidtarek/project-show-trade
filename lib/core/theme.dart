@@ -4,6 +4,8 @@ import 'package:show_trade/core/lighMode/lightTextTheme.dart';
 
 class AppTheme {
   static ThemeData lightMode = ThemeData(
+    scaffoldBackgroundColor: Colors.white,
+    dialogBackgroundColor: Colors.white,
       brightness: Brightness.light,
       textTheme: lightTextTheme,
       elevatedButtonTheme: ElevatedButtonThemeData(

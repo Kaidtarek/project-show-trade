@@ -3,12 +3,14 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:show_trade/backend/authenticationService.dart';
 import 'package:show_trade/core/constTypes/const_color.dart';
 import 'package:show_trade/core/constTypes/const_media.dart';
 import 'package:show_trade/core/constTypes/const_texts.dart';
 import 'package:show_trade/widget/custom_widget.dart';
+import 'package:show_trade/widget/functions.dart';
 
-import '../main.dart';
+import '../../main.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -22,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  bool checkbox = false;
   bool showPassword = false;
   bool? thisPasswordIsTheSame;
   @override
@@ -53,11 +56,19 @@ class _SignupScreenState extends State<SignupScreen> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: sh * 0.034),
-                Google_SignIn_Widget(sw: sw, sh: sh, context: context),
+                Custom_image_buttons(
+                    height: 0.06 * sh,
+                    width: 0.883 * sw,
+                    context: context,
+                    onPressed: () async {
+                      await await Authenticationservice()
+                          .SigninWithGoogle(context: context);
+                    },
+                    image: google_signin_image),
                 SizedBox(height: sh * 0.034),
                 Or_login_with_email_color(),
                 SizedBox(height: sh * 0.034),
-                FormFields(context: context),
+                formFields(context: context),
                 SizedBox(height: 0.034 * sh),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,11 +85,11 @@ class _SignupScreenState extends State<SignupScreen> {
                             alignment: PlaceholderAlignment.middle,
                             child: TextButton(
                               onPressed: () {
-                                PrivacyPolicy(context);
+                                privacyPolicy(context: context, sh: sh, sw: sw);
                               },
                               child: Text(
                                 "Privacy policy.",
-                                style: th.bodyMedium!.copyWith(
+                                style: th.bodySmall!.copyWith(
                                   color: primaryColor,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -86,18 +97,22 @@ class _SignupScreenState extends State<SignupScreen> {
                             )),
                       ]),
                     ),
-                    Container(
+                    SizedBox(
                       height: 0.032 * sh,
                       width: 0.032 * sh,
                       child: Checkbox(
-                          value: false,
+                        fillColor: WidgetStateProperty.all(checkBox_filled_color),
+                        focusColor: Colors.red,
+                        hoverColor: Colors.blue,
+                        checkColor: primaryColor,
+                        activeColor: Colors.green,
+                        side: BorderSide(color: focus_checkBox,width: 2.1),
+                        overlayColor: WidgetStateProperty.all(Colors.pink),
+                          value: checkbox,
                           onChanged: (v) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    "i will do that  after get design of FALSE-CHECK-BOX ."),
-                              ),
-                            );
+                            setState(() {
+                              checkbox = !checkbox;
+                            });
                           }),
                     )
                   ],
@@ -105,9 +120,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(height: 0.03 * sh),
                 IconButton(
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
-                  onPressed: () {showWelcomeDialog(context);},
+                  onPressed: () {
+                    showWelcomeDialog(context);
+                  },
                   icon: SvgPicture.asset(
-                    'assets/login_and_signup/get_started.svg',
+                    get_started,
                     width: 0.88 * sw,
                     height: 0.06 * sh,
                   ),
@@ -122,118 +139,24 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  PrivacyPolicy(BuildContext context) {
-    TextTheme th = Theme.of(context).textTheme;
-    final ScrollController sc = ScrollController();
-
-    void scrollToBottom() {
-      if (sc.hasClients) {
-        sc.animateTo(sc.position.maxScrollExtent,
-            duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn);
-      }
-    }
-
-    showModalBottomSheet(
-      backgroundColor: Colors.white,
-      isScrollControlled: true,
-      context: context,
-      builder: (b) {
-        return SizedBox(
-          height: sh * 0.85,
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  // Header section
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Container(
-                            width: 40,
-                            height: 4,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.only(right: sw * 0.07),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              "شروط الاستخدام",
-                              style: th.headlineMedium,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(height: 1),
-                  // Scrollable content section
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        RawScrollbar(
-                          controller: sc,
-                          thumbVisibility: true,
-                          thumbColor: primaryColor,
-                          radius: Radius.circular(20),
-                          thickness: 6,
-                          interactive: true,
-                          child: ListView(
-                            controller: sc,
-                            padding: EdgeInsets.all(16),
-                            children: [PrivacyTexts(context)],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                bottom: 10,
-                right: sw / 5,
-                child: IconButton(
-                    color: policy_text_color,
-                    onPressed: scrollToBottom,
-                    icon: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                          'assets/login_and_signup/scroll_to_bottom.svg'),
-                    )),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget FormFields({required BuildContext context}) {
+  Widget formFields({required BuildContext context}) {
     TextTheme th = Theme.of(context).textTheme;
     return Form(
         key: _formKey,
         child: Column(
           children: [
-            Container(
-              height: 0.065 * sh,
+            SizedBox(
+              height: 0.075 * sh,
               child: TextFormField(
                 controller: _emailController,
-                style: TextStyle(fontSize: 12),
+                style: th.bodySmall,
                 decoration: InputDecoration(
                     labelStyle: th.bodySmall,
                     fillColor: text_filled_color,
                     filled: true,
                     errorStyle: errorTextStyle,
-                    border: focusInputBorder,
-                    enabledBorder: enableInputBorder,
+                    border: unfocus,
+                    enabledBorder: focusInputBorder,
                     focusedBorder: focusInputBorder,
                     focusedErrorBorder: errorInputBorder,
                     errorBorder: errorInputBorder,
@@ -251,27 +174,28 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(height: 0.021 * sh),
-            Container(
+            SizedBox(
               height: 0.065 * sh,
               child: TextFormField(
                 obscureText: showPassword,
                 controller: _passwordController,
+                style: th.bodySmall,
                 decoration: InputDecoration(
                   labelStyle: th.bodySmall,
                   fillColor: text_filled_color,
                   filled: true,
-                  errorStyle: errorTextStyle,
                   suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
                           showPassword = !showPassword;
                         });
                       },
-                      icon: SvgPicture.asset(
-                          'assets/login_and_signup/eye_closed.svg')),
-                  enabledBorder: enableInputBorder,
+                      icon: SvgPicture.asset(eye_close)),
+                  errorStyle: errorTextStyle,
+                  border: unfocus,
+                  enabledBorder: focusInputBorder,
                   focusedBorder: focusInputBorder,
-                  focusedErrorBorder: enableInputBorder,
+                  focusedErrorBorder: errorInputBorder,
                   errorBorder: errorInputBorder,
                   labelText: 'password',
                 ),
@@ -298,22 +222,24 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(height: 0.021 * sh),
-            Container(
+            SizedBox(
               height: 0.065 * sh,
               child: TextFormField(
                 obscureText: true,
                 controller: _confirmPasswordController,
+                style: th.bodySmall,
                 decoration: InputDecoration(
                   labelStyle: th.bodySmall,
                   fillColor: text_filled_color,
                   filled: true,
-                  errorStyle: errorTextStyle,
                   suffixIcon: thisPasswordIsTheSame == true
                       ? Icon(Icons.check, color: Colors.green)
                       : SizedBox(),
-                  enabledBorder: enableInputBorder,
+                  errorStyle: errorTextStyle,
+                  border: unfocus,
+                  enabledBorder: focusInputBorder,
                   focusedBorder: focusInputBorder,
-                  focusedErrorBorder: enableInputBorder,
+                  focusedErrorBorder: errorInputBorder,
                   errorBorder: errorInputBorder,
                   labelText: 'password',
                 ),
@@ -344,55 +270,102 @@ class _SignupScreenState extends State<SignupScreen> {
         ));
   }
 
-void showWelcomeDialog(BuildContext context) {
+  void showWelcomeDialog(BuildContext context) {
     TextTheme th = Theme.of(context).textTheme;
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        content: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                
-                'Hi, Welcome! 👋',
-                textAlign: TextAlign.start,
-                style: th.bodyLarge!.copyWith(fontWeight: FontWeight.bold,color: Colors.black)
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Type name',
-                  labelText: 'Name',
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: sw * 0.05),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 0.03 * sh),
+                AutoSizeText(
+                  'Hi, Welcome! 👋',
+                  textAlign: TextAlign.start,
+                  minFontSize: 20,
+                  maxFontSize: 26,
+                  style: th.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Type username',
-                  labelText: 'Username',
+                SizedBox(height: sh * 0.04),
+                Text(
+                  "name",
+                  style: th.labelMedium!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.86,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Add your request code logic here
-                },
-                child: Text('Request a code'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
+                SizedBox(height: 0.015 * sh),
+                SizedBox(
+                  height: 0.06 * sh,
+                  child: TextField(
+                    style: th.labelMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.86,
+                    ),
+                    decoration: InputDecoration(
+                      border: unfocus,
+                      focusedBorder: focusInputBorder,
+                      disabledBorder: unfocus,
+                      alignLabelWithHint: false,
+                      hintText: 'Type name',
+                      hintStyle: th.bodyMedium,
+                      labelStyle: th.bodyMedium,
+                      fillColor: text_filled_color,
+                      filled: true,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: 0.023 * sh),
+                Text(
+                  "Username",
+                  style: th.labelMedium!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.86,
+                  ),
+                ),
+                SizedBox(
+                  height: 0.06 * sh,
+                  child: TextField(
+                    style: th.labelMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.86,
+                    ),
+                    decoration: InputDecoration(
+                      border: unfocus,
+                      focusedBorder: focusInputBorder,
+                      disabledBorder: unfocus,
+                      hintText: 'Type username',
+                      labelStyle: th.bodyMedium,
+                      hintStyle: th.bodyMedium,
+                      fillColor: text_filled_color,
+                      filled: true,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Custom_image_buttons(
+                    height: 0.059 * sh,
+                    width: 0.8 * sw,
+                    context: context,
+                    onPressed: () {
+                      context.go('/verification');
+                    },
+                    image: request_code),
+                SizedBox(height: 0.03 * sh),
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
-}
-
+        );
+      },
+    );
+  }
 }

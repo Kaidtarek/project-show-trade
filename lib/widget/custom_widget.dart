@@ -2,19 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:show_trade/backend/authenticationService.dart';
 import 'package:show_trade/core/constTypes/const_color.dart';
 
-IconButton Google_SignIn_Widget(
-    {required double sw, required double sh, required BuildContext context}) {
+IconButton Custom_image_buttons(
+    {required double height, required double width, required BuildContext context,required VoidCallback onPressed, required String image}) {
   return IconButton(
-      onPressed: () async {
-        await Authenticationservice().SigninWithGoogle(context: context);
-      },
+      onPressed: onPressed, 
       icon: SvgPicture.asset(
-        'assets/login_and_signup/continue_with_google.svg',
-        width: 0.883 * sw,
-        height: 0.06 * sh,
+        image,
+        width: width,
+        height:height,
       ));
 }
 

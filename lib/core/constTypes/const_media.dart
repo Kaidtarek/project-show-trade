@@ -1,3 +1,11 @@
 const String splashBG = 'assets/login_and_signup/bg.svg';
 const String splashLogo = 'assets/logo.svg';
 const String loginLogo = 'assets/login_and_signup/logo_in_app.svg';
+const String google_signin_image ='assets/login_and_signup/continue_with_google.svg';
+const String get_started = 'assets/login_and_signup/get_started.svg';
+const String scroll_to_bottom = 'assets/login_and_signup/scroll_to_bottom.svg';
+const String eye_close = 'assets/login_and_signup/eye_closed.svg';
+const String request_code = 'assets/login_and_signup/request_code.svg';
+const String sign_in_button = 'assets/login_and_signup/signin_button.svg';
+const String mail = 'assets/login_and_signup/mail.svg';
+const String next = 'assets/login_and_signup/next.svg';

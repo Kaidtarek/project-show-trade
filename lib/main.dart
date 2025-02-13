@@ -4,14 +4,15 @@ import 'package:go_router/go_router.dart';
 import 'package:show_trade/core/theme.dart';
 import 'package:show_trade/firebase_options.dart';
 import 'package:show_trade/screens/home.dart';
-import 'package:show_trade/screens/login.dart';
-import 'package:show_trade/screens/signup.dart';
-import 'package:show_trade/screens/splash.dart';
+import 'package:show_trade/screens/login_signin_screens/login.dart';
+import 'package:show_trade/screens/login_signin_screens/signup.dart';
+import 'package:show_trade/screens/login_signin_screens/splash.dart';
+import 'package:show_trade/screens/request_verification.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 double sh = 0.0;
 double sw = 0.0;
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -59,6 +60,11 @@ final router = GoRouter(
       name: 'home',
       path: '/home',
       builder: (context, state) => HomePage(),
+    ),
+    GoRoute(
+      name: 'verification',
+      path: '/verification',
+      builder: (context, state) => RequestVerification(),
     ),
   ],
 );
